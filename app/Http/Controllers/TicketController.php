@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Ticket;
 use App\Models\Department;
+use Illuminate\Support\Facades\Auth;
+
 
 
 class TicketController extends Controller
@@ -13,7 +15,10 @@ class TicketController extends Controller
     {
         if(request()->ajax()) {
             return datatables()->of(Ticket::select('*'))
-            ->addColumn('action', 'tickets.tickets-action')
+            ->addColumn('action', 'tickets.ticket-action')
+            ->addColumn('department', function($row){
+                return $row->department->name;
+            })
             ->rawColumns(['action'])
             ->addIndexColumn()
             ->make(true);
@@ -42,6 +47,8 @@ class TicketController extends Controller
                     'subject' => $request->subject,
                     'department_id' => $request->department_id,
                     'body' => $request->body,
+                    'student_id' => Auth::user()->id,
+                    'status' => 0,
 
                     ]);    
                          

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Tickets')
+@section('title', 'Users')
 
 @section('content')
 <div class="container mt-2">
@@ -8,7 +8,7 @@
 <div class="col-lg-12 margin-tb">
 <div class="float-left">
     <ol class="breadcrumb float-sm-right">
-      @if (Auth::user()->role == 'admin')
+    @if (Auth::user()->role == 'admin')
       <li class="breadcrumb-item"><a href="{{url('admin_dashboard')}}">Home</a></li>
       @elseif(Auth::user()->role == 'technician')
       <li class="breadcrumb-item"><a href="{{url('technician_dashboard')}}">Home</a></li> 
@@ -19,7 +19,7 @@
     </ol>
 </div>
 <div class="float-right mb-2">
-<a class="btn btn-success" onClick="add()" href="javascript:void(0)"> Create Ticket</a>
+<a class="btn btn-success" onClick="add()" href="javascript:void(0)"> Create User</a>
 </div>
 </div>
 </div>
@@ -29,52 +29,59 @@
 </div>
 @endif
 <div class="card-body">
-<table class="table table-bordered" id="ticket-datatable">
+<table class="table table-bordered" id="user-datatable">
 <thead>
 <tr>
 <th>Id</th>
-<th>Subject</th>
-<th>Department</th>
-<th>Body</th>
+<th>First name</th>
+<th>Last name</th>
+<th>Email</th>
+<th>Role</th>
+<th>Created at</th>
 <th>Action</th>
 </tr>
 </thead>
 </table>
 </div>
 </div>
-<!-- boostrap ticket model -->
-<div class="modal fade" id="ticket-modal" aria-hidden="true">
+<!-- boostrap user model -->
+<div class="modal fade" id="user-modal" aria-hidden="true">
 <div class="modal-dialog modal-lg">
 <div class="modal-content">
 <div class="modal-header">
-<h4 class="modal-title" id="TicketModal"></h4>
+<h4 class="modal-title" id="UserModal"></h4>
 </div>
 <div class="modal-body">
-<form action="javascript:void(0)" id="TicketForm" name="TicketForm" class="form-horizontal" method="POST" enctype="multipart/form-data">
+<form action="javascript:void(0)" id="UserForm" name="UserForm" class="form-horizontal" method="POST" enctype="multipart/form-data">
 <input type="hidden" name="id" id="id">
 <div class="form-group">
-<label for="subject" class="col-sm-6 control-label"> Subject</label>
+<label for="first_name" class="col-sm-2 control-label">First Name</label>
 <div class="col-sm-12">
-<input type="text" class="form-control" id="subject" name="subject" placeholder="Enter Subject" maxlength="50" required="">
+<input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter First Name" maxlength="50" required="">
+</div>
+</div>  
+<div class="form-group">
+<label for="last_name" class="col-sm-2 control-label">Last Name</label>
+<div class="col-sm-12">
+<input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter Last Name" maxlength="50" required="">
 </div>
 </div> 
 <div class="form-group">
-<label for="department_id" class="col-sm-2 control-label">Department</label>
+<label for="email" class="col-sm-2 control-label">Email</label>
 <div class="col-sm-12">
-    <select department="department_id" id="department_id" name="department_id" class="form-control" maxlength="50" required="">
-    <option value="0">Select department</option>
-    @foreach ($departments as $department)
-    <option value="{{$department->id}}">{{$department->name}} </option>            
-    @endforeach
-    </select>
+<input type="email" class="form-control" id="email" name="email" placeholder="Enter Email" maxlength="50" required="">
 </div>
 </div>
 <div class="form-group">
-<label for="body" class="col-sm-6 control-label"> Body</label>
+<label class="col-sm-2 control-label">Role</label>
 <div class="col-sm-12">
-<input type="text" class="form-control" id="body" name="body" placeholder="Enter Body" maxlength="2250" required="">
+     <select name="role" id="role" class="form-control" maxlength="50" required="">
+        <option value="admin">Administrator</option>
+        <option value="technician">Technician</option>
+        <option value="student">Student</option>
+      </select>
 </div>
-</div> 
+</div>
 <div class="col-sm-offset-2 col-sm-10">
 <button type="submit" class="btn btn-primary" id="btn-save">Save changes
 </button>
@@ -94,40 +101,41 @@ headers: {
 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 }
 });
-$('#ticket-datatable').DataTable({
+$('#user-datatable').DataTable({
 processing: true,
 serverSide: true,
-ajax: "{{ url('ticket-datatable') }}",
+ajax: "{{ url('user-datatable') }}",
 columns: [
 { data: 'id', name: 'id' },
-{ data: 'subject', name: 'subject' },
-{ data: 'department', name: 'department.name' },
-{ data: 'body', name: 'body' },
+{ data: 'first_name', name: 'first_name' },
+{ data: 'last_name', name: 'last_name' },
+{ data: 'email', name: 'email' },
+{ data: 'role', name: 'role' },
+{ data: 'created_at', name: 'created_at' },
 {data: 'action', name: 'action', orderable: false},
 ],
 order: [[0, 'desc']]
 });
 });
 function add(){
-$('#TicketsForm').trigger("reset");
-$('#TickettModal').html("Add Ticket");
-$('#ticket-modal').modal('show');
+$('#UserForm').trigger("reset");
+$('#UserModal').html("Add User");
+$('#user-modal').modal('show');
 $('#id').val('');
 }   
 function editFunc(id){
 $.ajax({
 type:"POST",
-url: "{{ url('edit-ticket') }}",
+url: "{{ url('edit-user') }}",
 data: { id: id },
 dataType: 'json',
 success: function(res){
-$('#TicketModal').html("Edit Ticket");
-$('#ticket-modal').modal('show');
+$('#UserModal').html("Edit User");
+$('#user-modal').modal('show');
 $('#id').val(res.id);
-$('#subject').val(res.subject);
-$('#department_id').val(res.department_id);
-$('#body').val(res.body);
-
+$('#first_name').val(res.first_name);
+$('#last_name').val(res.last_name);
+$('#email').val(res.email);
 }
 });
 }  
@@ -137,29 +145,29 @@ var id = id;
 // ajax
 $.ajax({
 type:"POST",
-url: "{{ url('delete-ticket') }}",
+url: "{{ url('delete-user') }}",
 data: { id: id },
 dataType: 'json',
 success: function(res){
-var oTable = $('#ticket-datatable').dataTable();
+var oTable = $('#user-datatable').dataTable();
 oTable.fnDraw(false);
 }
 });
 }
 }
-$('#TicketForm').submit(function(e) {
+$('#UserForm').submit(function(e) {
 e.preventDefault();
 var formData = new FormData(this);
 $.ajax({
 type:'POST',
-url: "{{ url('store-ticket')}}",
+url: "{{ url('store-user')}}",
 data: formData,
 cache:false,
 contentType: false,
 processData: false,
 success: (data) => {
-$("#ticket-modal").modal('hide');
-var oTable = $('#ticket-datatable').dataTable();
+$("#user-modal").modal('hide');
+var oTable = $('#user-datatable').dataTable();
 oTable.fnDraw(false);
 $("#btn-save").html('Submit');
 $("#btn-save"). attr("disabled", false);

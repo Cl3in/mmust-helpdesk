@@ -22,7 +22,13 @@ return new class extends Migration
             ->on('departments')
             ->onUpdate('cascade')
             ->onDelete('no action');
-
+            $table->integer('student_id')->unsigned();
+            $table->foreign('student_id')
+            ->references('id')
+            ->on('users')
+            ->onUpdate('cascade')
+            ->onDelete('no action');
+            $table->integer('status')->nullable();
             $table->longText('body');
             $table->timestamps();
         });

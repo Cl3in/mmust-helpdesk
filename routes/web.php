@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\UserControler;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,5 +39,12 @@ Route::get('ticket-datatable', [TicketController::class, 'index']);
 Route::post('store-ticket', [TicketController::class, 'store']);
 Route::post('edit-ticket', [TicketController::class, 'edit']);
 Route::post('delete-ticket', [TicketController::class, 'destroy']);
+
+//user
+Route::get('user-datatable', [UserControler::class, 'index']);
+Route::post('store-user', [UserControler::class, 'store']);
+Route::post('edit-user', [UserControler::class, 'edit']);
+Route::post('delete-user', [UserControler::class, 'destroy']);
+
 
 
