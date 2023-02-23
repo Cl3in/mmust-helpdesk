@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\TicketController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,4 +26,17 @@ Route::get('/student_dashboard', [App\Http\Controllers\Student\DashboardControll
 
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+//departments
+Route::get('department-datatable', [DepartmentController::class, 'index']);
+Route::post('store-department', [DepartmentController::class, 'store']);
+Route::post('edit-department', [DepartmentController::class, 'edit']);
+Route::post('delete-department', [DepartmentController::class, 'destroy']);
+
+//ticket
+Route::get('ticket-datatable', [TicketController::class, 'index']);
+Route::post('store-ticket', [TicketController::class, 'store']);
+Route::post('edit-ticket', [TicketController::class, 'edit']);
+Route::post('delete-ticket', [TicketController::class, 'destroy']);
+
 
