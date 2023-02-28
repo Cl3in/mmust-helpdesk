@@ -40,6 +40,7 @@ Route::post('delete-department', [DepartmentController::class, 'destroy']);
 
 //ticket
 Route::get('ticket-datatable', [TicketController::class, 'index']);
+Route::get('myticket-datatable', [TicketController::class, 'myTicket']);
 Route::post('store-ticket', [TicketController::class, 'store']);
 Route::post('edit-ticket', [TicketController::class, 'edit']);
 Route::post('delete-ticket', [TicketController::class, 'destroy']);
@@ -63,8 +64,10 @@ Route::post('edit-assignedticket', [AssignedTicketController::class, 'edit']);
 Route::post('delete-assignedticket', [AssignedTicketController::class, 'destroy']);
 
 //profile
-Route::get('profile', [ProfileController::class, 'getProfile']);
-
+Route::middleware(['auth'])->group(function () {
+    Route::get('profile', [ProfileController::class,'getProfile'])->name('profile');
+    Route::post('profile', [ProfileController::class,'postProfileUpdate'])->name('updateProfile');
+});
 
 
 

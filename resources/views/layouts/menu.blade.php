@@ -76,7 +76,7 @@
 
           @can('isStudent')
           <li class="nav-item">
-          <a href="{{url('ticket-datatable')}}" class="nav-link">
+          <a href="{{url('myticket-datatable')}}" class="nav-link">
               <i class="nav-icon fas fa-envelope"></i>
               <p>
                 My Tickets

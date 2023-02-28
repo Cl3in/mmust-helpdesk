@@ -13,4 +13,13 @@ class ProfileController extends Controller
         $user = Auth::user();
         return view('profile.profile', compact('user'));
     }
+
+    public function postProfileUpdate(Request $request)
+    {
+        $userId = Auth::user()->id;
+        $user = User::findOrFail($userId);
+
+        Auth::user()->update($request->all());
+        return back()->with(['message'=>'Successfully updated']);
+    }
 }

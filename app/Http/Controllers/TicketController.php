@@ -26,6 +26,24 @@ class TicketController extends Controller
         $departments = Department::all();
         return view('tickets.tickets')->with('departments',$departments);
     }
+
+    public function myTicket()
+    {
+        $user = Auth::user()->id;
+  
+        if(request()->ajax()) {
+            return datatables()->of(Ticket::where('student_id', $user->id))
+            ->addColumn('action', 'tickets.ticket-action')
+            ->addColumn('department', function($row){
+                return $row->department->name;
+            })
+            ->rawColumns(['action'])
+            ->addIndexColumn()
+            ->make(true);
+        }
+        $departments = Department::all();
+        return view('tickets.mytickets')->with('departments',$departments);
+    }
       
       
     /**
