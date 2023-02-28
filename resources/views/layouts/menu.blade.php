@@ -86,10 +86,10 @@
           @endcan
 
           <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-cog"></i>
+           <a href="{{url('profile')}}" class="nav-link">
+              <i class="nav-icon fas fa-user"></i>
               <p>
-                Settings
+                Profile
               </p>
             </a>
           </li>

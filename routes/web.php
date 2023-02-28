@@ -63,10 +63,7 @@ Route::post('edit-assignedticket', [AssignedTicketController::class, 'edit']);
 Route::post('delete-assignedticket', [AssignedTicketController::class, 'destroy']);
 
 //profile
-Route::get('profile-datatable', [ProfileController::class, 'index']);
-Route::post('store-profile', [ProfileController::class, 'store']);
-Route::post('edit-profile', [ProfileController::class, 'edit']);
-Route::post('delete-profile', [ProfileController::class, 'destroy']);
+Route::get('profile', [ProfileController::class, 'getProfile']);
 
 
 
