@@ -34,8 +34,8 @@
 <tr>
 <th>Id</th>
 <th>Subject</th>
-<th>Department</th>
-<th>Body</th>
+<th>Response</th>
+<th>Status</th>
 <th>Action</th>
 </tr>
 </thead>
@@ -101,8 +101,8 @@ ajax: "{{ url('ticket-datatable') }}",
 columns: [
 { data: 'id', name: 'id' },
 { data: 'subject', name: 'subject' },
-{ data: 'department', name: 'department.name' },
-{ data: 'body', name: 'body' },
+{ data: 'response', name: 'response' },
+{ data: 'status', name: 'status' },
 {data: 'action', name: 'action', orderable: false},
 ],
 order: [[0, 'desc']]

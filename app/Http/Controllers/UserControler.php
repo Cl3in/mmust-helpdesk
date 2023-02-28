@@ -13,6 +13,13 @@ class UserControler extends Controller
         if(request()->ajax()) {
             return datatables()->of(User::select('*'))
             ->addColumn('action', 'users.user-action')
+            ->addColumn('status', function($row){
+                if($row->status == 0){
+                    return 'Pending';
+                }
+                else
+                    return 'Closed';    }
+            })
             ->rawColumns(['action'])
             ->addIndexColumn()
             ->make(true);

@@ -34,8 +34,11 @@ class TicketController extends Controller
         if(request()->ajax()) {
             return datatables()->of(Ticket::where('student_id', $user->id))
             ->addColumn('action', 'tickets.ticket-action')
-            ->addColumn('department', function($row){
-                return $row->department->name;
+            ->addColumn('status', function($row){
+                if($row->status == 0) {
+                    return 'Pending';
+                }
+                else return 'Closed';
             })
             ->rawColumns(['action'])
             ->addIndexColumn()
