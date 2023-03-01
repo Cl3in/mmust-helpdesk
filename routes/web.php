@@ -40,10 +40,12 @@ Route::post('delete-department', [DepartmentController::class, 'destroy']);
 
 //ticket
 Route::get('ticket-datatable', [TicketController::class, 'index']);
-Route::get('myticket-datatable', [TicketController::class, 'myTicket']);
 Route::post('store-ticket', [TicketController::class, 'store']);
 Route::post('edit-ticket', [TicketController::class, 'edit']);
 Route::post('delete-ticket', [TicketController::class, 'destroy']);
+Route::get('myticket-datatable', [TicketController::class, 'myTicket']);
+Route::get('mypendingticket-datatable', [TicketController::class, 'myPendingTicket']);
+Route::get('myclosedticket-datatable', [TicketController::class, 'myClosedTicket']);
 
 //user
 Route::get('user-datatable', [UserControler::class, 'index']);
@@ -62,6 +64,7 @@ Route::get('assignedticket-datatable', [AssignedTicketController::class, 'index'
 Route::post('store-assignedticket', [AssignedTicketController::class, 'store']);
 Route::post('edit-assignedticket', [AssignedTicketController::class, 'edit']);
 Route::post('delete-assignedticket', [AssignedTicketController::class, 'destroy']);
+Route::get('allassignedticket-datatable', [AssignedTicketController::class, 'allAssigned']);
 
 //profile
 Route::middleware(['auth'])->group(function () {

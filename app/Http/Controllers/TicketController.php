@@ -29,10 +29,10 @@ class TicketController extends Controller
 
     public function myTicket()
     {
-        $user = Auth::user()->id;
   
         if(request()->ajax()) {
-            return datatables()->of(Ticket::where('student_id', $user->id))
+            $user = Auth::user();
+            return datatables()->of(Ticket::select('*')->where('student_id','=', $user->id)->get())
             ->addColumn('action', 'tickets.ticket-action')
             ->addColumn('status', function($row){
                 if($row->status == 0) {
@@ -46,6 +46,50 @@ class TicketController extends Controller
         }
         $departments = Department::all();
         return view('tickets.mytickets')->with('departments',$departments);
+    }
+
+    public function myPendingTicket()
+    {
+  
+        if(request()->ajax()) {
+            $user = Auth::user();
+            return datatables()->of(Ticket::select('*')->where('student_id','=', $user->id)
+            ->where('status', '=', 0)->get())
+            ->addColumn('action', 'tickets.mypendingticket-action')
+            ->addColumn('status', function($row){
+                if($row->status == 0) {
+                    return 'Pending';
+                }
+                else return 'Closed';
+            })
+            ->rawColumns(['action'])
+            ->addIndexColumn()
+            ->make(true);
+        }
+        $departments = Department::all();
+        return view('tickets.mypendingtickets')->with('departments',$departments);
+    }
+
+    public function myClosedTicket()
+    {
+  
+        if(request()->ajax()) {
+            $user = Auth::user();
+            return datatables()->of(Ticket::select('*')->where('student_id','=', $user->id)
+            ->where('status', '=', 1)->get())
+            ->addColumn('action', 'tickets.myclosedticket-action')
+            ->addColumn('status', function($row){
+                if($row->status == 0) {
+                    return 'Pending';
+                }
+                else return 'Closed';
+            })
+            ->rawColumns(['action'])
+            ->addIndexColumn()
+            ->make(true);
+        }
+        $departments = Department::all();
+        return view('tickets.myclosedtickets')->with('departments',$departments);
     }
       
       

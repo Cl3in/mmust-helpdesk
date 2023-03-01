@@ -27,7 +27,7 @@ class ManageTicketController extends Controller
                 if($row->status == 0) {
                     return 'Pending';
                 }
-                else return 'closed';
+                else return 'Closed';
             })
             ->rawColumns(['action'])
             ->addIndexColumn()

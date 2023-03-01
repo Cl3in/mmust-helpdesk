@@ -13,7 +13,8 @@ class AssignedTicketController extends Controller
     public function index()
     {
         if(request()->ajax()) {
-            return datatables()->of(ManageTicket::select('*'))
+            $user = Auth::user();
+            return datatables()->of(ManageTicket::select('*')->where('technician_id', $user->id))
             ->addColumn('action', 'assignedticket.assignedticket-action')
             ->addColumn('ticket', function($row){
                 return $row->ticket->subject;
@@ -28,11 +29,35 @@ class AssignedTicketController extends Controller
             ->addIndexColumn()
             ->make(true);
         }
-        $user = Auth::user();
-        $tickets = Ticket::where($user->id, 'technician_id');
+        $tickets = Ticket::all();
         $technicians = User::where('role','technician')->get();
 
         return view('assignedticket.assignedticket',compact('tickets','technicians'));
+    }
+
+    public function allAssigned()
+    {
+        if(request()->ajax()) {
+            $user = Auth::user();
+            return datatables()->of(ManageTicket::select('*'))
+            ->addColumn('action', 'assignedticket.allassignedticket-action')
+            ->addColumn('ticket', function($row){
+                return $row->ticket->subject;
+            })
+            ->addColumn('status', function($row){
+                if($row->status == 0) {
+                    return 'Pending';
+                }
+                else return 'Closed';
+            })
+            ->rawColumns(['action'])
+            ->addIndexColumn()
+            ->make(true);
+        }
+        $tickets = Ticket::all();
+        $technicians = User::where('role','technician')->get();
+
+        return view('assignedticket.allassignedtickets',compact('tickets','technicians')); 
     }
 
     public function edit(Request $request)

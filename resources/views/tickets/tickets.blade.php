@@ -55,7 +55,7 @@
 <div class="form-group">
 <label for="subject" class="col-sm-6 control-label"> Subject</label>
 <div class="col-sm-12">
-<input type="text" class="form-control" id="subject" name="subject" placeholder="Enter Subject" maxlength="50" required="">
+<input type="text" class="form-control" id="subject" name="subject" placeholder="Enter Subject" maxlength="2250" required="">
 </div>
 </div> 
 <div class="form-group">

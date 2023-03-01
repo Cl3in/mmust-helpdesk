@@ -18,7 +18,7 @@ class UserControler extends Controller
                     return 'Pending';
                 }
                 else
-                    return 'Closed';    }
+                    return 'Closed';    
             })
             ->rawColumns(['action'])
             ->addIndexColumn()
