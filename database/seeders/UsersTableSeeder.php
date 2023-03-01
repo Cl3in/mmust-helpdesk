@@ -25,15 +25,15 @@ class UsersTableSeeder extends Seeder
         ]);
 
         User::create([
-            'first_name' => 'Technician1',
-            'last_name' => 'Kemunto',
+            'first_name' => 'Camilla',
+            'last_name' => 'Makira',
             'email' => 'technician1@gmail.com',
             'role' => 'technician',
             'password' => Hash::make('123456')
         ]);
 
         User::create([
-            'first_name' => 'Technician2',
+            'first_name' => 'Nancy',
             'last_name' => 'Kemunto',
             'email' => 'technician2@gmail.com',
             'role' => 'technician',
@@ -41,7 +41,7 @@ class UsersTableSeeder extends Seeder
         ]);
 
         User::create([
-            'first_name' => 'Student1',           
+            'first_name' => 'John',           
             'last_name' => 'Paul',
             'email' => 'student1@gmail.com',
             'role' => 'student',
@@ -49,7 +49,7 @@ class UsersTableSeeder extends Seeder
         ]);
 
         User::create([
-            'first_name' => 'Student2',           
+            'first_name' => 'Henry',           
             'last_name' => 'Paul',
             'email' => 'student2@gmail.com',
             'role' => 'student',

@@ -46,52 +46,7 @@ class TicketController extends Controller
         }
         $departments = Department::all();
         return view('tickets.mytickets')->with('departments',$departments);
-    }
-
-    public function myPendingTicket()
-    {
-  
-        if(request()->ajax()) {
-            $user = Auth::user();
-            return datatables()->of(Ticket::select('*')->where('student_id','=', $user->id)
-            ->where('status', '=', 0)->get())
-            ->addColumn('action', 'tickets.mypendingticket-action')
-            ->addColumn('status', function($row){
-                if($row->status == 0) {
-                    return 'Pending';
-                }
-                else return 'Closed';
-            })
-            ->rawColumns(['action'])
-            ->addIndexColumn()
-            ->make(true);
-        }
-        $departments = Department::all();
-        return view('tickets.mypendingtickets')->with('departments',$departments);
-    }
-
-    public function myClosedTicket()
-    {
-  
-        if(request()->ajax()) {
-            $user = Auth::user();
-            return datatables()->of(Ticket::select('*')->where('student_id','=', $user->id)
-            ->where('status', '=', 1)->get())
-            ->addColumn('action', 'tickets.myclosedticket-action')
-            ->addColumn('status', function($row){
-                if($row->status == 0) {
-                    return 'Pending';
-                }
-                else return 'Closed';
-            })
-            ->rawColumns(['action'])
-            ->addIndexColumn()
-            ->make(true);
-        }
-        $departments = Department::all();
-        return view('tickets.myclosedtickets')->with('departments',$departments);
-    }
-      
+    }  
       
     /**
      * Store a newly created resource in storage.
@@ -149,4 +104,49 @@ class TicketController extends Controller
       
         return Response()->json($ticket);
     }
+
+    public function myPendingTicket()
+    {
+  
+        if(request()->ajax()) {
+            $user = Auth::user();
+            return datatables()->of(Ticket::select('*')->where('student_id','=', $user->id)
+            ->where('status', '=', 0)->get())
+            ->addColumn('action', 'tickets.mypendingticket-action')
+            ->addColumn('status', function($row){
+                if($row->status == 0) {
+                    return 'Pending';
+                }
+                else return 'Closed';
+            })
+            ->rawColumns(['action'])
+            ->addIndexColumn()
+            ->make(true);
+        }
+        $departments = Department::all();
+        return view('tickets.mypendingtickets')->with('departments',$departments);
+    }
+
+    public function myClosedTicket()
+    {
+  
+        if(request()->ajax()) {
+            $user = Auth::user();
+            return datatables()->of(Ticket::select('*')->where('student_id','=', $user->id)
+            ->where('status', '=', 1)->get())
+            ->addColumn('action', 'tickets.myclosedticket-action')
+            ->addColumn('status', function($row){
+                if($row->status == 0) {
+                    return 'Pending';
+                }
+                else return 'Closed';
+            })
+            ->rawColumns(['action'])
+            ->addIndexColumn()
+            ->make(true);
+        }
+        $departments = Department::all();
+        return view('tickets.myclosedtickets')->with('departments',$departments);
+    }
+    
 }

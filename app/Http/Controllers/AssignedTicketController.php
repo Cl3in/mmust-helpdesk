@@ -44,6 +44,11 @@ class AssignedTicketController extends Controller
             ->addColumn('ticket', function($row){
                 return $row->ticket->subject;
             })
+            ->addColumn('technician', function($row){
+                $firstname = $row->technician->first_name;
+                $lastname = $row->technician->last_name;
+                return $firstname.' '.$lastname;
+            })
             ->addColumn('status', function($row){
                 if($row->status == 0) {
                     return 'Pending';

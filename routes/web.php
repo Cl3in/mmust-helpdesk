@@ -47,17 +47,28 @@ Route::get('myticket-datatable', [TicketController::class, 'myTicket']);
 Route::get('mypendingticket-datatable', [TicketController::class, 'myPendingTicket']);
 Route::get('myclosedticket-datatable', [TicketController::class, 'myClosedTicket']);
 
+
 //user
 Route::get('user-datatable', [UserControler::class, 'index']);
 Route::post('store-user', [UserControler::class, 'store']);
 Route::post('edit-user', [UserControler::class, 'edit']);
 Route::post('delete-user', [UserControler::class, 'destroy']);
 
+// student
+Route::get('student-datatable', [UserControler::class, 'getStudent']);
+Route::post('store-student', [UserControler::class, 'storeStudent']);
+Route::post('edit-student', [UserControler::class, 'editStudent']);
+Route::post('delete-student', [UserControler::class, 'destroyStudent']);
+
 //manageticket
 Route::get('manageticket-datatable', [ManageTicketController::class, 'index']);
 Route::post('store-manageticket', [ManageTicketController::class, 'store']);
 Route::post('edit-manageticket', [ManageTicketController::class, 'edit']);
 Route::post('delete-manageticket', [ManageTicketController::class, 'destroy']);
+Route::get('adminpendingticket-datatable', [ManageTicketController::class, 'adminPendingTicket']);
+Route::get('adminclosedticket-datatable', [ManageTicketController::class, 'adminClosedTicket']);
+Route::get('technicianpendingticket-datatable', [ManageTicketController::class, 'technicianPendingTicket']);
+Route::get('technicianclosedticket-datatable', [ManageTicketController::class, 'technicianClosedTicket']);
 
 //assignedticket
 Route::get('assignedticket-datatable', [AssignedTicketController::class, 'index']);
@@ -65,6 +76,8 @@ Route::post('store-assignedticket', [AssignedTicketController::class, 'store']);
 Route::post('edit-assignedticket', [AssignedTicketController::class, 'edit']);
 Route::post('delete-assignedticket', [AssignedTicketController::class, 'destroy']);
 Route::get('allassignedticket-datatable', [AssignedTicketController::class, 'allAssigned']);
+
+
 
 //profile
 Route::middleware(['auth'])->group(function () {

@@ -108,7 +108,7 @@ ajax: "{{ url('allassignedticket-datatable') }}",
 columns: [
 { data: 'id', name: 'id' },
 { data: 'ticket', name: 'ticket.subject' },
-{ data: 'tehcnician', name: 'ticket.technician' },
+{ data: 'technician', name: 'ticket.technician' },
 { data: 'status', name: 'status' },
 { data: 'response', name: 'response' },
 {data: 'action', name: 'action', orderable: false},
