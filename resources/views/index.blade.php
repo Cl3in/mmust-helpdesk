@@ -59,7 +59,7 @@
     <div class="container d-flex flex-column justify-content-center align-items-center text-center position-relative" data-aos="zoom-out">
       <img src="assets/img/hero-carousel/undraw_hello_re_3evm.svg" class="img-fluid animated">
       <h2>Welcome to <span>{{config('app.name')}}</span></h2>
-      <p>Et voluptate esse accusantium accusamus natus reiciendis quidem voluptates similique aut.</p>
+      <p>MMUST HelpDesk is a university online support system for students and staff queries </p>
     </div>
   </section>
 
