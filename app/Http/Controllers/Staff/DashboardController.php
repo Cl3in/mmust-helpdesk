@@ -1,12 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Student;
+namespace App\Http\Controllers\Staff;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Ticket;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 
 class DashboardController extends Controller
 {
@@ -17,6 +16,6 @@ class DashboardController extends Controller
         $user = Auth::user();
         $pendingtickets = Ticket::where('user_id', $user->id)->where('status', 0)->count();
         $completedtickets = Ticket::where('user_id', $user->id)->where('status', 1)->count();
-        return view('student.dashboard', compact('pendingtickets', 'completedtickets'));
+        return view('staff.dashboard', compact('pendingtickets', 'completedtickets'));
       }
 }

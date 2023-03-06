@@ -27,6 +27,7 @@ Route::get('/', function () {
 Auth::routes();
 Route::get('/admin_dashboard', [App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('admin')->middleware('role:admin');
 Route::get('/technician_dashboard', [App\Http\Controllers\Technician\DashboardController::class, 'index'])->name('technician')->middleware('role:technician');
+Route::get('/staff_dashboard', [App\Http\Controllers\Staff\DashboardController::class, 'index'])->name('staff')->middleware('role:staff');
 Route::get('/student_dashboard', [App\Http\Controllers\Student\DashboardController::class, 'index'])->name('student')->middleware('role:student');
 
 
@@ -53,6 +54,7 @@ Route::get('user-datatable', [UserControler::class, 'index']);
 Route::post('store-user', [UserControler::class, 'store']);
 Route::post('edit-user', [UserControler::class, 'edit']);
 Route::post('delete-user', [UserControler::class, 'destroy']);
+
 
 // student
 Route::get('student-datatable', [UserControler::class, 'getStudent']);

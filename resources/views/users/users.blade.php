@@ -78,6 +78,7 @@
      <select name="role" id="role" class="form-control" maxlength="50" required="">
         <option value="admin">Administrator</option>
         <option value="technician">Technician</option>
+        <option value="staff">Staff</option>
         <option value="student">Student</option>
       </select>
 </div>

@@ -22,8 +22,8 @@ return new class extends Migration
             ->on('departments')
             ->onUpdate('cascade')
             ->onDelete('no action');
-            $table->integer('student_id')->unsigned();
-            $table->foreign('student_id')
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')
             ->references('id')
             ->on('users')
             ->onUpdate('cascade')

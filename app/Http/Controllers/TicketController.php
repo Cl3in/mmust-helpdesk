@@ -35,7 +35,7 @@ class TicketController extends Controller
   
         if(request()->ajax()) {
             $user = Auth::user();
-            return datatables()->of(Ticket::select('*')->where('student_id','=', $user->id)->get())
+            return datatables()->of(Ticket::select('*')->where('user_id','=', $user->id)->get())
             ->addColumn('action', 'tickets.ticket-action')
             ->addColumn('status', function($row){
                 if($row->status == 0) {
@@ -70,7 +70,7 @@ class TicketController extends Controller
                     'subject' => $request->subject,
                     'department_id' => $request->department_id,
                     'body' => $request->body,
-                    'student_id' => Auth::user()->id,
+                    'user_id' => Auth::user()->id,
                     'status' => 0,
 
                     ]);    

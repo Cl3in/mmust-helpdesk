@@ -38,10 +38,15 @@ class RedirectIfAuthenticated
             case 'admin':
                return redirect('/admin_dashboard');
                break;
-            case 'seller':
-               return redirect('/seller_dashboard');
+            case 'technician':
+               return redirect('/technician_dashboard');
                break; 
-      
+               case 'staff':
+                  return redirect('/staff_dashboard');
+                  break; 
+                  case 'student':
+                     return redirect('/student_dashboard');
+                     break; 
             default:
                return redirect('/home'); 
                break;

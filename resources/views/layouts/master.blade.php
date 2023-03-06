@@ -39,6 +39,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <a href="#" class="nav-link">Admin Dashboard</a>
         @elseif (Auth::user()->role == 'technician')
         <a href="#" class="nav-link">Technician Dashboard</a>
+        @elseif (Auth::user()->role == 'staff')
+        <a href="#" class="nav-link">Staff Dashboard</a>
         @else
         <a href="#" class="nav-link">Student Dashboard</a>
         @endif

@@ -92,6 +92,16 @@
               </li>
               
           @endcan
+          @can('isStaff')
+          <li class="nav-item">
+          <a href="{{url('myticket-datatable')}}" class="nav-link">
+              <i class="nav-icon fas fa-envelope"></i>
+              <p>
+                My Tickets
+              </p>
+            </a>
+          </li>
+          @endcan
 
           @can('isStudent')
           <li class="nav-item">
