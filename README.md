@@ -31,7 +31,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 Here’s what your completed application will look like:
-![Record_select-area_20230306133506](https://user-images.githubusercontent.com/34887895/223086621-4ab4e8f7-0378-42ed-b80e-ce1c307d8fda.gif)
+![Capture](https://user-images.githubusercontent.com/99318986/223087815-c82db9bc-308f-4b66-a963-32f2bc4b204e.PNG)
 
 
 
