@@ -11,7 +11,6 @@
 [![Stargazers][stars-shield]][stars-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
-[![LinkedIn][linkedin-shield]][linkedin-url]
 
 <!-- PROJECT LOGO -->
 <br />
@@ -101,7 +100,7 @@ _Below is an example of how you can instruct your audience on installing and set
 
 <!-- Your Name - [@your_twitter](https://twitter.com/Cl3in) - email@example.com
  -->
-Project Link: [https://github.com/markmosobo/farm-management](https://github.com/Cl3in/mmust-helpdesk)
+Project Link: [https://github.com/Cl3in/mmust-helpdesk](https://github.com/Cl3in/mmust-helpdesk)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
