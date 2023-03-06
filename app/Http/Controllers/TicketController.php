@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Ticket;
 use App\Models\Department;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -24,7 +25,9 @@ class TicketController extends Controller
             ->make(true);
         }
         $departments = Department::all();
-        return view('tickets.tickets')->with('departments',$departments);
+        $technicians = User::where('role', 'technician')->get();
+        $tickets = Ticket::all();
+        return view('tickets.tickets', compact('departments', 'technicians','tickets'));
     }
 
     public function myTicket()

@@ -87,6 +87,45 @@
 </div>
 </div>
 <!-- end bootstrap model -->
+<!-- boostrap assign ticket model -->
+<div class="modal fade" id="assignticket-modal" aria-hidden="true">
+<div class="modal-dialog modal-lg">
+<div class="modal-content">
+<div class="modal-header">
+<h4 class="modal-title" id="AssignTicketModal"></h4>
+</div>
+<div class="modal-body">
+<form action="javascript:void(0)" id="AssignTicketForm" name="AssignTicketForm" class="form-horizontal" method="POST" enctype="multipart/form-data">
+<input type="hidden" name="id" id="id">
+<div class="form-group">
+<label for="technician_id" class="col-sm-2 control-label">Technician</label>
+<div class="col-sm-12">
+    <select technician="technician_id" id="technician_id" name="technician_id" class="form-control" maxlength="50" required="">
+    <option value="0">Select technician</option>
+    @foreach ($technicians as $technician)
+    <option value="{{$department->id}}">{{$technician->first_name}} </option>            
+    @endforeach
+    </select>
+</div>
+</div>
+<div class="form-group">
+<label for="remarks" class="col-sm-6 control-label"> Remarks</label>
+<div class="col-sm-12">
+<input type="text" class="form-control" id="remarks" name="remarks" placeholder="Enter Remarks(optional)" maxlength="2250" required="">
+</div>
+</div> 
+<div class="col-sm-offset-2 col-sm-10">
+<button type="submit" class="btn btn-primary" id="btn-save">Save changes
+</button>
+</div>
+</form>
+</div>
+<div class="modal-footer">
+</div>
+</div>
+</div>
+</div>
+<!-- end bootstrap assign model -->
 <script type="text/javascript">
 $(document).ready( function () {
 $.ajaxSetup({
@@ -130,7 +169,23 @@ $('#body').val(res.body);
 
 }
 });
-}  
+}
+function assignFunc(id){
+$.ajax({
+type:"POST",
+url: "{{ url('edit-ticket') }}",
+data: { id: id },
+dataType: 'json',
+success: function(res){
+$('#AssignTicketModal').html("Assign Ticket");
+$('#assignticket-modal').modal('show');
+$('#id').val(res.id);
+$('#technician_id').val(res.technician_id);
+$('#remarks').val(res.remarks);
+
+}
+});
+}   
 function deleteFunc(id){
 if (confirm("Delete Record?") == true) {
 var id = id;
@@ -159,6 +214,28 @@ contentType: false,
 processData: false,
 success: (data) => {
 $("#ticket-modal").modal('hide');
+var oTable = $('#ticket-datatable').dataTable();
+oTable.fnDraw(false);
+$("#btn-save").html('Submit');
+$("#btn-save"). attr("disabled", false);
+},
+error: function(data){
+console.log(data);
+}
+});
+});
+$('#AssignTicketForm').submit(function(e) {
+e.preventDefault();
+var formData = new FormData(this);
+$.ajax({
+type:'POST',
+url: "{{ url('store-manageticket')}}",
+data: formData,
+cache:false,
+contentType: false,
+processData: false,
+success: (data) => {
+$("#assignticket-modal").modal('hide');
 var oTable = $('#ticket-datatable').dataTable();
 oTable.fnDraw(false);
 $("#btn-save").html('Submit');

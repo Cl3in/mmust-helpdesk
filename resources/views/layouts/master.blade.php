@@ -87,28 +87,19 @@ scratch. This page gets rid of all links and provides the needed markup only.
 
             <p>
             {{Auth::user()->first_name}} {{Auth::user()->last_name}}
-              <small>Member since Nov. 2012</small>
             </p>
           </li>
           <!-- Menu Body -->
-          <li class="user-body">
-            <div class="row">
-              <div class="col-4 text-center">
-                <a href="#">Followers</a>
-              </div>
-              <div class="col-4 text-center">
-                <a href="#">Sales</a>
-              </div>
-              <div class="col-4 text-center">
-                <a href="#">Friends</a>
-              </div>
-            </div>
-            <!-- /.row -->
-          </li>
           <!-- Menu Footer-->
           <li class="user-footer">
-            <a href="#" class="btn btn-default btn-flat">Profile</a>
-            <a href="#" class="btn btn-default btn-flat float-right">Sign out</a>
+            <a href="{{url('profile')}}" class="btn btn-default btn-flat">Profile</a>
+            <a href="{{ route('logout') }}" class="btn btn-default btn-flat float-right"
+            onclick="event.preventDefault();
+             document.getElementById('logout-form').submit();">Sign out</a>
+             
+              <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                  @csrf
+              </form>
           </li>
         </ul>
       </li>
@@ -169,6 +160,8 @@ scratch. This page gets rid of all links and provides the needed markup only.
 <!-- ./wrapper -->
 
 <!-- REQUIRED SCRIPTS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
 
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
