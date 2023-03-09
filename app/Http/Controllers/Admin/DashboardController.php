@@ -8,6 +8,7 @@ use App\Models\ManageTicket;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Department;
+use App\Models\Ticket;
 
 class DashboardController extends Controller
 {
@@ -20,6 +21,8 @@ class DashboardController extends Controller
         $completedtickets = ManageTicket::where('status', 1)->count();
         $users = User::all()->count();
         $departments = Department::all()->count();
+        $unassignedtickets = Ticket::where('status', 0)->count();
         return view('admin.dashboard', compact('pendingtickets',
-         'completedtickets', 'users', 'departments'));      }
+         'completedtickets', 'users', 'departments','unassignedtickets')); 
+    }
 }

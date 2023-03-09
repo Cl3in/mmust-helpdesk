@@ -161,6 +161,7 @@ var oTable = $('#ticket-datatable').dataTable();
 oTable.fnDraw(false);
 $("#btn-save").html('Submit');
 $("#btn-save"). attr("disabled", false);
+$("#ticket-modal").modal('reset');
 },
 error: function(data){
 console.log(data);

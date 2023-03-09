@@ -33,7 +33,7 @@ class ManageTicketController extends Controller
             ->addIndexColumn()
             ->make(true);
         }
-        $tickets = Ticket::all();
+        $tickets = Ticket::where('status', 0)->get();
         $technicians = User::where('role','technician')->get();
 
         return view('manageticket.manageticket',compact('tickets','technicians'));
@@ -60,7 +60,14 @@ class ManageTicketController extends Controller
                     'technician_id' => $request->technician_id,
                     'remarks' => $request->remarks,
 
-                    ]);    
+                    ]);   
+            $id = $request->ticket_id;
+            $ticket = Ticket::findOrFail($id);
+            
+            if($ticket){
+                $ticket->update(array('status' => 1));
+                $ticket->save();
+            }
                          
         return Response()->json($manageticket);
  
@@ -144,9 +151,12 @@ class ManageTicketController extends Controller
   
         if(request()->ajax()) {
             $user = Auth::user();
-            return datatables()->of(Ticket::select('*')->where('technician_id','=', $user->id)
+            return datatables()->of(ManageTicket::select('*')->where('technician_id','=', $user->id)
             ->where('status', '=', 0)->get())
             ->addColumn('action', 'technician.pendingticket-action')
+            ->addColumn('ticket', function($row){
+                return $row->ticket->subject;
+            })
             ->addColumn('status', function($row){
                 if($row->status == 0) {
                     return 'Pending';
@@ -158,7 +168,10 @@ class ManageTicketController extends Controller
             ->make(true);
         }
         $departments = Department::all();
-        return view('technician.pendingtickets')->with('departments',$departments);
+        $tickets = Ticket::all();
+        return view('technician.pendingtickets', compact(
+            'departments', 'tickets'
+        ));
     }
 
     public function technicianClosedTicket()
@@ -166,7 +179,7 @@ class ManageTicketController extends Controller
   
         if(request()->ajax()) {
             $user = Auth::user();
-            return datatables()->of(Ticket::select('*')->where('technician_id','=', $user->id)
+            return datatables()->of(ManageTicket::select('*')->where('technician_id','=', $user->id)
             ->where('status', '=', 1)->get())
             ->addColumn('action', 'technician.closedticket-action')
             ->addColumn('status', function($row){

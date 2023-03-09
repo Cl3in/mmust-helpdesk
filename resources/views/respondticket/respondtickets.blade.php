@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Assign Tickets')
+@section('title', 'Responded Tickets')
 
 @section('content')
 <div class="container mt-2">
@@ -19,8 +19,8 @@
     </ol>
 </div>
 <div class="float-right mb-2">
-    @if (count($tickets) >= 1)
-    <a class="btn btn-success" onClick="add()" href="javascript:void(0)"> Assign Ticket</a>
+    @if (count($tickets) >=1)
+    <a class="btn btn-success" onClick="add()" href="javascript:void(0)"> Respond to Ticket</a>
     @else        
     @endif
 </div>
@@ -32,29 +32,27 @@
 </div>
 @endif
 <div class="card-body">
-<table class="table table-bordered" id="manageticket-datatable">
+<table class="table table-bordered" id="respondticket-datatable">
 <thead>
 <tr>
 <th>Id</th>
 <th>Ticket</th>
-<th>Technician</th>
-<th>Remarks</th>
-<th>Status</th>
+<th>Response</th>
 <th>Action</th>
 </tr>
 </thead>
 </table>
 </div>
 </div>
-<!-- boostrap ticket model -->
-<div class="modal fade" id="manageticket-modal" aria-hidden="true">
+<!-- boostrap respondticket model -->
+<div class="modal fade" id="respondticket-modal" aria-hidden="true">
 <div class="modal-dialog modal-lg">
 <div class="modal-content">
 <div class="modal-header">
-<h4 class="modal-title" id="ManageTicketModal"></h4>
+<h4 class="modal-title" id="RespondTicketModal"></h4>
 </div>
 <div class="modal-body">
-<form action="javascript:void(0)" id="ManageTicketForm" name="ManageTicketForm" class="form-horizontal" method="POST" enctype="multipart/form-data">
+<form action="javascript:void(0)" id="RespondTicketForm" name="RespondTicketForm" class="form-horizontal" method="POST" enctype="multipart/form-data">
 <input type="hidden" name="id" id="id"> 
 <div class="form-group">
 <label for="ticket_id" class="col-sm-2 control-label">Ticket</label>
@@ -62,26 +60,16 @@
     <select ticket="ticket_id" id="ticket_id" name="ticket_id" class="form-control" maxlength="50" required="">
     <option value="0">Select ticket</option>
     @foreach ($tickets as $ticket)
-    <option value="{{$ticket->id}}">{{$ticket->subject}} </option>            
+    <option value="{{$ticket->id}}">{{$ticket->ticket->subject}} </option>            
     @endforeach
     </select>
 </div>
 </div>
 <div class="form-group">
-<label for="technician_id" class="col-sm-2 control-label">Technician</label>
+<label for="response" class="col-sm-6 control-label"> Response</label>
 <div class="col-sm-12">
-    <select technician="technician_id" id="technician_id" name="technician_id" class="form-control" maxlength="50" required="">
-    <option value="0">Select technician</option>
-    @foreach ($technicians as $technician)
-    <option value="{{$technician->id}}">{{$technician->first_name}} {{$technician->last_name}} </option>            
-    @endforeach
-    </select>
-</div>
-</div>
-<div class="form-group">
-<label for="remarks" class="col-sm-6 control-label"> Remarks</label>
-<div class="col-sm-12">
-<input type="text" class="form-control" id="remarks" name="remarks" placeholder="Enter Remarks" maxlength="2250" required="">
+<input type="text" class="form-control" id="response" name="response" placeholder="Enter Response"
+ maxlength="2250" required="">
 </div>
 </div> 
 <div class="col-sm-offset-2 col-sm-10">
@@ -103,40 +91,37 @@ headers: {
 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 }
 });
-$('#manageticket-datatable').DataTable({
+$('#respondticket-datatable').DataTable({
 processing: true,
 serverSide: true,
-ajax: "{{ url('manageticket-datatable') }}",
+ajax: "{{ url('respondticket-datatable') }}",
 columns: [
 { data: 'id', name: 'id' },
 { data: 'ticket', name: 'ticket.subject' },
-{ data: 'technician', name: 'technician.first_name' },
-{ data: 'remarks', name: 'remarks' },
-{ data: 'status', name: 'status' },
+{ data: 'response', name: 'response' },
 {data: 'action', name: 'action', orderable: false},
 ],
 order: [[0, 'desc']]
 });
 });
 function add(){
-$('#ManageTicket').trigger("reset");
-$('#ManageTicketModal').html("Assign Ticket");
-$('#manageticket-modal').modal('show');
+$('#RespondTicket').trigger("reset");
+$('#RespondTicketModal').html("Add Response");
+$('#respondticket-modal').modal('show');
 $('#id').val('');
 }   
 function editFunc(id){
 $.ajax({
 type:"POST",
-url: "{{ url('edit-ticket') }}",
+url: "{{ url('edit-respondticket') }}",
 data: { id: id },
 dataType: 'json',
 success: function(res){
-$('#ManageTicketModal').html("Edit Assigned Ticket");
-$('#manageticket-modal').modal('show');
+$('#RespondTicketModal').html("Edit Response");
+$('#respondticket-modal').modal('show');
 $('#id').val(res.id);
 $('#ticket_id').val(res.ticket_id);
-$('#technician_id').val(res.technician_id);
-$('#remarks').val(res.remarks);
+$('#response').val(res.response);
 
 }
 });
@@ -147,29 +132,30 @@ var id = id;
 // ajax
 $.ajax({
 type:"POST",
-url: "{{ url('delete-manageticket') }}",
+url: "{{ url('delete-respondticket') }}",
 data: { id: id },
 dataType: 'json',
 success: function(res){
-var oTable = $('#manageticket-datatable').dataTable();
+var oTable = $('#respondticket-datatable').dataTable();
 oTable.fnDraw(false);
 }
 });
 }
 }
-$('#ManageTicketForm').submit(function(e) {
+$('#RespondTicketForm').submit(function(e) {
 e.preventDefault();
 var formData = new FormData(this);
 $.ajax({
 type:'POST',
-url: "{{ url('store-manageticket')}}",
+url: "{{ url('store-respondticket')}}",
 data: formData,
 cache:false,
 contentType: false,
 processData: false,
 success: (data) => {
-$("#manageticket-modal").modal('hide');
-var oTable = $('#manageticket-datatable').dataTable();
+$("#respondticket-modal").modal('hide');
+$("#respondticket-modal").modal('reset');
+var oTable = $('#respondticket-datatable').dataTable();
 oTable.fnDraw(false);
 $("#btn-save").html('Submit');
 $("#btn-save"). attr("disabled", false);

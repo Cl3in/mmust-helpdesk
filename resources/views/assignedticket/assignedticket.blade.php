@@ -34,8 +34,8 @@
 <tr>
 <th>Id</th>
 <th>Ticket</th>
+<th>Remarks</th>
 <th>Status</th>
-<th>Response</th>
 <th>Action</th>
 </tr>
 </thead>
@@ -96,8 +96,8 @@ ajax: "{{ url('assignedticket-datatable') }}",
 columns: [
 { data: 'id', name: 'id' },
 { data: 'ticket', name: 'ticket.subject' },
+{ data: 'remarks', name: 'remarks' },
 { data: 'status', name: 'status' },
-{ data: 'response', name: 'response' },
 {data: 'action', name: 'action', orderable: false},
 ],
 order: [[0, 'desc']]
@@ -112,7 +112,7 @@ $('#id').val('');
 function editFunc(id){
 $.ajax({
 type:"POST",
-url: "{{ url('edit-ticket') }}",
+url: "{{ url('edit-assignedticket') }}",
 data: { id: id },
 dataType: 'json',
 success: function(res){
