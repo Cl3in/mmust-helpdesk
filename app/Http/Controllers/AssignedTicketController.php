@@ -31,8 +31,9 @@ class AssignedTicketController extends Controller
         }
         $tickets = Ticket::all();
         $technicians = User::where('role','technician')->get();
+        $unassignedtickets = Ticket::where('status', 0)->count();
 
-        return view('assignedticket.assignedticket',compact('tickets','technicians'));
+        return view('assignedticket.assignedticket',compact('tickets','technicians', 'unassignedtickets'));
     }
 
     public function allAssigned()

@@ -6,6 +6,7 @@ use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserControler;
 use App\Http\Controllers\ManageTicketController;
 use App\Http\Controllers\AssignedTicketController;
+use App\Http\Controllers\RespondTicketController;
 use App\Http\Controllers\ProfileController;
 
 
@@ -79,6 +80,10 @@ Route::post('edit-assignedticket', [AssignedTicketController::class, 'edit']);
 Route::post('delete-assignedticket', [AssignedTicketController::class, 'destroy']);
 Route::get('allassignedticket-datatable', [AssignedTicketController::class, 'allAssigned']);
 
+//respondticket
+Route::get('respondticket-datatable', [RespondTicketController::class, 'index']);
+Route::post('store-respondticket', [RespondTicketController::class, 'store']);
+Route::post('edit-respondticket', [RespondTicketController::class, 'edit']);
 
 
 //profile

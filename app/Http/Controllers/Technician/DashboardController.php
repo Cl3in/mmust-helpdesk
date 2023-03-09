@@ -20,7 +20,8 @@ class DashboardController extends Controller
         $completedtickets = ManageTicket::where('technician_id', $user->id)->where('status', 1)->count();
         $students = User::where('role', 'student')->count();
         $departments = Department::all()->count();
+        $technicianpendingtickets = ManageTicket::where('technician_id', $user->id)->where('status', 0)->count();
         return view('technician.dashboard', compact('pendingtickets',
-         'completedtickets', 'students', 'departments'));
+         'completedtickets', 'students', 'departments','technicianpendingtickets'));
       }
 }

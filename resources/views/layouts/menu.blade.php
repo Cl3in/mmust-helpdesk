@@ -84,12 +84,29 @@
 
 
           @can('isTechnician')
-          <li class="nav-item">
+          <li class="nav-item menu">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-envelope"></i>
+              <p>
+                Manage Tickets
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+             <li class="nav-item">
               <a href="{{url('assignedticket-datatable')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Assigned Tickets</p>
                 </a>
               </li>
+              <li class="nav-item">
+              <a href="{{url('respondticket-datatable')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Respond to Tickets</p>
+                </a>
+              </li>
+            </ul>
+          </li>
               
           @endcan
           @can('isStaff')

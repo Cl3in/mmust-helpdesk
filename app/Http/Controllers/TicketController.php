@@ -20,6 +20,12 @@ class TicketController extends Controller
             ->addColumn('department', function($row){
                 return $row->department->name;
             })
+            ->addColumn('status', function($row){
+                if($row->status == 0) {
+                    return 'Unassigned';
+                }
+                else return 'Assigned';
+            })
             ->rawColumns(['action'])
             ->addIndexColumn()
             ->make(true);

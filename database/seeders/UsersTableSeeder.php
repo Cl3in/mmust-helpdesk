@@ -41,6 +41,22 @@ class UsersTableSeeder extends Seeder
         ]);
 
         User::create([
+            'first_name' => 'Charles',           
+            'last_name' => 'Okumbo',
+            'email' => 'staff1@gmail.com',
+            'role' => 'staff',
+            'password' => Hash::make('123456')
+        ]);
+
+        User::create([
+            'first_name' => 'Isaac',           
+            'last_name' => 'Gitonga',
+            'email' => 'staff2@gmail.com',
+            'role' => 'staff',
+            'password' => Hash::make('123456')
+        ]);
+
+        User::create([
             'first_name' => 'John',           
             'last_name' => 'Paul',
             'email' => 'student1@gmail.com',

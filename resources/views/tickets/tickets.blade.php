@@ -19,7 +19,9 @@
     </ol>
 </div>
 <div class="float-right mb-2">
-<a class="btn btn-success" onClick="add()" href="javascript:void(0)"> Create Ticket</a>
+@if (Auth::user()->role == 'student' || Auth::user()->role == 'staff')
+<a class="btn btn-success" onClick="add()" href="javascript:void(0)"> Create Ticket</a>    
+@endif
 </div>
 </div>
 </div>
@@ -36,6 +38,7 @@
 <th>Subject</th>
 <th>Department</th>
 <th>Body</th>
+<th>Status</th>
 <th>Action</th>
 </tr>
 </thead>
@@ -98,6 +101,12 @@
 <form action="javascript:void(0)" id="AssignTicketForm" name="AssignTicketForm" class="form-horizontal" method="POST" enctype="multipart/form-data">
 <input type="hidden" name="id" id="id">
 <div class="form-group">
+<label for="subject" class="col-sm-6 control-label"> Subject</label>
+<div class="col-sm-12">
+<input type="text" class="form-control" id="subject" name="subject" placeholder="Enter Subject" maxlength="2250" required="">
+</div>
+</div> 
+<div class="form-group">
 <label for="technician_id" class="col-sm-2 control-label">Technician</label>
 <div class="col-sm-12">
     <select technician="technician_id" id="technician_id" name="technician_id" class="form-control" maxlength="50" required="">
@@ -142,6 +151,7 @@ columns: [
 { data: 'subject', name: 'subject' },
 { data: 'department', name: 'department.name' },
 { data: 'body', name: 'body' },
+{ data: 'status', name: 'status' },
 {data: 'action', name: 'action', orderable: false},
 ],
 order: [[0, 'desc']]
@@ -170,7 +180,7 @@ $('#body').val(res.body);
 }
 });
 }
-function assignFunc(id){
+function viewFunc(id){
 $.ajax({
 type:"POST",
 url: "{{ url('edit-ticket') }}",
@@ -180,6 +190,7 @@ success: function(res){
 $('#AssignTicketModal').html("Assign Ticket");
 $('#assignticket-modal').modal('show');
 $('#id').val(res.id);
+$('#subject').val(res.subject);
 $('#technician_id').val(res.technician_id);
 $('#remarks').val(res.remarks);
 

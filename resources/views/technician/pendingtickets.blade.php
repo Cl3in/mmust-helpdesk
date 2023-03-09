@@ -33,7 +33,7 @@
 <thead>
 <tr>
 <th>Id</th>
-<th>Subject</th>
+<th>Ticket</th>
 <th>Status</th>
 <th>Action</th>
 </tr>
@@ -52,11 +52,16 @@
 <form action="javascript:void(0)" id="PendingTicketForm" name="PendingTicketForm" class="form-horizontal" method="POST" enctype="multipart/form-data">
 <input type="hidden" name="id" id="id">
 <div class="form-group">
-<label for="subject" class="col-sm-6 control-label"> Subject</label>
+<label for="ticket_id" class="col-sm-2 control-label">Ticket</label>
 <div class="col-sm-12">
-<input type="text" class="form-control" id="subject" name="subject" placeholder="Enter Subject" maxlength="2250" required="">
+    <select department="ticket_id" id="ticket_id" name="ticket_id" class="form-control" maxlength="50" required="">
+    <option value="0">Select ticket</option>
+    @foreach ($tickets as $ticket)
+    <option value="{{$ticket->id}}">{{$ticket->subject}} </option>            
+    @endforeach
+    </select>
 </div>
-</div> 
+</div>
 <div class="form-group">
 <label for="department_id" class="col-sm-2 control-label">Department</label>
 <div class="col-sm-12">
@@ -99,7 +104,7 @@ serverSide: true,
 ajax: "{{ url('pendingticket-datatable') }}",
 columns: [
 { data: 'id', name: 'id' },
-{ data: 'subject', name: 'subject' },
+{ data: 'ticket', name: 'ticket.subject' },
 { data: 'status', name: 'status' },
 {data: 'action', name: 'action', orderable: false},
 ],
