@@ -32,15 +32,39 @@ class LoginController extends Controller
         $role = Auth::user()->role; 
         switch ($role) {
           case 'admin':
+            $logfile = fopen("logs.txt","a+");
+            $firstname =Auth::user()->first_name;
+            $lastname =Auth::user()->last_name;
+            $time=now();
+            fwrite($logfile,"\n$time\t$firstname\t$lastname\tlogged\tin");
+            fclose($logfile);
             return '/admin_dashboard';
             break;
           case 'technician':
+            $logfile = fopen("logs.txt","a+");
+            $firstname =Auth::user()->first_name;
+            $lastname =Auth::user()->last_name;
+            $time=now();
+            fwrite($logfile,"\n$time\t$firstname\t$lastname\tlogged\tin");
+            fclose($logfile);
             return '/technician_dashboard';
             break;
             case 'staff':
+              $logfile = fopen("logs.txt","a+");
+              $firstname =Auth::user()->first_name;
+              $lastname =Auth::user()->last_name;
+              $time=now();
+              fwrite($logfile,"\n$time\t$firstname\t$lastname\tlogged\tin");
+              fclose($logfile);
               return '/staff_dashboard';
               break;  
           case 'student':
+            $logfile = fopen("logs.txt","a+");
+            $firstname =Auth::user()->first_name;
+            $lastname =Auth::user()->last_name;
+            $time=now();
+            fwrite($logfile,"\n$time\t$firstname\t$lastname\tlogged\tin");
+            fclose($logfile);
             return '/student_dashboard';
             break;   
 

@@ -73,7 +73,16 @@ class TicketController extends Controller
                     'user_id' => Auth::user()->id,
                     'status' => 0,
 
-                    ]);    
+                    ]);  
+                    
+                    $logfile = fopen("logs.txt","a+");
+                    $firstname =Auth::user()->first_name;
+                    $lastname =Auth::user()->last_name;
+                    $time=now();
+                    $subject = $request->subject;
+
+                    fwrite($logfile,"\n$time\t$firstname\t$lastname created\tticket $subject");
+                    fclose($logfile);
                          
         return Response()->json($ticket);
  
@@ -90,6 +99,15 @@ class TicketController extends Controller
     {   
         $where = array('id' => $request->id);
         $ticket = Ticket::where($where)->first();
+
+        $logfile = fopen("logs.txt","a+");
+        $firstname =Auth::user()->first_name;
+        $lastname =Auth::user()->last_name;
+        $time=now();
+        $subject = $request->subject;
+
+        fwrite($logfile,"\n$time\t$firstname\t$lastname updated\tticket $subject");
+        fclose($logfile);
       
         return Response()->json($ticket);
     }
@@ -104,6 +122,15 @@ class TicketController extends Controller
     public function destroy(Request $request)
     {
         $ticket = Ticket::where('id',$request->id)->delete();
+
+        $logfile = fopen("logs.txt","a+");
+        $firstname =Auth::user()->first_name;
+        $lastname =Auth::user()->last_name;
+        $time=now();
+        $subject = $request->subject;
+
+        fwrite($logfile,"\n$time\t$firstname\t$lastname deleted\tticket $subject");
+        fclose($logfile);
       
         return Response()->json($ticket);
     }

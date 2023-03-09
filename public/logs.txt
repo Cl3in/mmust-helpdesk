@@ -1,0 +1,42 @@
+\n$firstname\t$lastname\tlogged\tin
+CALVINS	OCHIENG 	logged	in
+CALVINS	OCHIENG 	logged	in	2023-03-09 10:48:45
+2023-03-09 10:52:07	CALVINS	OCHIENG 	logged	in
+2023-03-09 11:04:42	CALVINS	OCHIENG 	logged	in
+2023-03-09 11:05:19	CALVINS	OCHIENG 	POST /store-ticket HTTP/1.1
+Accept:             */*
+Accept-Encoding:    gzip, deflate, br
+Accept-Language:    en-US,en;q=0.9
+Connection:         keep-alive
+Content-Length:     473
+Content-Type:       multipart/form-data; boundary=----WebKitFormBoundary3QVjM3udySMk2BI0
+Cookie:             XSRF-TOKEN=eyJpdiI6Ijk1dkxPRng0ZzFrdHk0WkQwRTkxL0E9PSIsInZhbHVlIjoiVC9TejU2Sm9BaHE0SERGR3RYUlNTbEtPQ1EvbWlRRkRZV0hHWGJyUEFvTUJQNEtjcXdHd290NUdCVmFVWWI3MWVnTTlrejZaRjBoSTVCZ2xmMC9ldURNOHdMN2h4OFVmdndGSzEvTmRoNXVDMHJNVUpHTEtodWMxYWxlNUx2dkoiLCJtYWMiOiJhOTMzNjVjYjNjNjM2MjZkY2QzYzU3OWMwN2FlZDkzMmFhYmU5NDYzNWIwNjFlNmZhMTU0M2E0YWMxNDZjZDhlIiwidGFnIjoiIn0%3D; mmust_help_desk_session=eyJpdiI6IlY1dXc2a0JPQ0xINHc2U2hDQk9tUUE9PSIsInZhbHVlIjoiZnZGWm9Wb1F3Z3pyMHJEK1NNb1BBVXVIclArMzh3M21uSW4vRHJsbWowTmlsQkR4M1dqL0I3bEVzZlVyVS9rTldZeVVWVlJ3L0dFWUxTMUFhQmVwV0NLeG41Mk1EWm4zTVdZU2thVzhrZTNWbWVkYUlFQ1RHL05uUzBaREFQSG8iLCJtYWMiOiJjMjg1ZDZjMjZiYjU1ZjI0ZWMwNTI3OTQ1NDE1MDA5YzM5YjU4OTAyZDI2Zjc2NGY5ZTA1YjVhZWY4MTRlYWE3IiwidGFnIjoiIn0%3D
+Host:               127.0.0.1:8000
+Origin:             http://127.0.0.1:8000
+Referer:            http://127.0.0.1:8000/ticket-datatable
+Sec-Ch-Ua:          "Chromium";v="110", "Not A(Brand";v="24", "Google Chrome";v="110"
+Sec-Ch-Ua-Mobile:   ?0
+Sec-Ch-Ua-Platform: "Windows"
+Sec-Fetch-Dest:     empty
+Sec-Fetch-Mode:     cors
+Sec-Fetch-Site:     same-origin
+User-Agent:         Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36
+X-Csrf-Token:       otyH74qbYUoGOLicUAP3gPlUrOZQqMBzQYH1ODd1
+X-Requested-With:   XMLHttpRequest
+Cookie: XSRF-TOKEN=otyH74qbYUoGOLicUAP3gPlUrOZQqMBzQYH1ODd1; mmust_help_desk_session=OeOI39jkFqAjT2BUa8MwA0zrGaJOtwvVMGoDmB2H
+
+	created	ticket
+2023-03-09 11:07:44	CALVINS	OCHIENG 	created	ticket
+2023-03-09 11:08:37	CALVINS	OCHIENG  created	ticket
+2023-03-09 11:13:03	CALVINS	OCHIENG  created	ticket I cant log in to my portal
+2023-03-09 11:22:09	CALVINS	OCHIENG  deleted	ticket 
+2023-03-09 11:23:21	CALVINS	OCHIENG  updated	ticket 
+2023-03-09 11:23:27	CALVINS	OCHIENG  created	ticket I cant log in to my portal
+2023-03-09 11:26:24	CALVINS	OCHIENG  created	ticket Missing marks
+2023-03-09 11:26:47	CALVINS	OCHIENG  updated	ticket 
+2023-03-09 11:26:55	CALVINS	OCHIENG  created	ticket Network problem
+2023-03-09 11:30:17	Camilla	Makira	logged	in
+2023-03-09 11:30:18	Camilla	Makira logged	in
+2023-03-09 11:32:13	Camilla	Makira	logged	in
+2023-03-09 11:33:19	CALVINS	OCHIENG 	logged	in
+2023-03-09 12:17:11	Camilla	Makira	logged	in

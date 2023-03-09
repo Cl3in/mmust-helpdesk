@@ -49,8 +49,21 @@
         <!-- <img src="assets/img/logo.png" alt=""> -->
         <h1>HELPDESK<span></span></h1>
       </a>
-
+      @if (Route::has('login'))
+      @auth
+      @if(Auth::user()->role == 'admin')
+      <a class="btn-getstarted scrollto" href="{{url('/admin_dashboard')}}">DASHBOARD</a>
+      @elseif(Auth::user()->role == 'technician')
+      <a class="btn-getstarted scrollto" href="{{url('/technician_dashboard')}}">DASHBOARD</a>
+      @elseif(Auth::user()->role == 'staff')
+      <a class="btn-getstarted scrollto" href="{{url('/staff_dashboard')}}">DASHBOARD</a>
+      @else
+      <a class="btn-getstarted scrollto" href="{{url('/student_dashboard')}}">DASHBOARD</a>
+      @endif
+      @else
       <a class="btn-getstarted scrollto" href="{{route('login')}}">LOGIN</a>
+      @endauth
+      @endif
 
     </div>
   </header><!-- End Header -->
