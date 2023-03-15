@@ -58,3 +58,17 @@ Cookie: XSRF-TOKEN=otyH74qbYUoGOLicUAP3gPlUrOZQqMBzQYH1ODd1; mmust_help_desk_ses
 2023-03-15 13:33:29	CALVINS	OCHIENG 	logged	in
 2023-03-15 13:37:05	Camilla	Makira	logged	in
 2023-03-15 13:43:14	John	Paul	logged	in
+2023-03-15 15:08:04	CALVINS	OCHIENG 	logged	in
+2023-03-15 15:12:19	Charles	Okumbo	logged	in
+2023-03-15 15:16:35	John	Paul	logged	in
+2023-03-15 15:24:22	John	Paul created	ticket Portal Login
+2023-03-15 15:27:32	John	Paul created	ticket Portal Login
+2023-03-15 15:27:35	John	Paul created	ticket Portal Login
+2023-03-15 15:27:45	John	Paul created	ticket Portal Login
+2023-03-15 15:28:11	John	Paul created	ticket Portal Login
+2023-03-15 15:28:40	John	Paul created	ticket Portal Login
+2023-03-15 15:28:49	John	Paul created	ticket Portal Login
+2023-03-15 15:31:40	John	Paul created	ticket I need a university school email
+2023-03-15 15:36:35	John	Paul created	ticket I HAVA MISINNG MARK
+2023-03-15 16:02:23	CALVINS	OCHIENG 	logged	in
+2023-03-15 16:03:15	Camilla	Makira	logged	in

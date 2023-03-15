@@ -43,7 +43,7 @@ Route::post('delete-department', [DepartmentController::class, 'destroy']);
 //ticket
 Route::get('ticket-datatable', [TicketController::class, 'index']);
 Route::post('store-ticket', [TicketController::class, 'store']);
-Route::get('ticket/{id}', [TicketController::class, 'show'])->name('ticket.show');
+Route::get('ticket/{id}', [TicketController::class, 'show'])->name('tickets.show');
 Route::post('edit-ticket', [TicketController::class, 'edit']);
 Route::post('delete-ticket', [TicketController::class, 'destroy']);
 Route::get('myticket-datatable', [TicketController::class, 'myTicket']);

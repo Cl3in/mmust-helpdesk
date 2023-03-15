@@ -4,211 +4,129 @@
 
 @section('content')
 <div class="container mt-2">
-<div class="row">
-<div class="col-lg-12 margin-tb">
-<div class="float-left">
-    <ol class="breadcrumb float-sm-right">
-      @if (Auth::user()->role == 'admin')
-      <li class="breadcrumb-item"><a href="{{url('admin_dashboard')}}">Home</a></li>
-      @elseif(Auth::user()->role == 'technician')
-      <li class="breadcrumb-item"><a href="{{url('technician_dashboard')}}">Home</a></li> 
-      @else
-      <li class="breadcrumb-item"><a href="{{url('student_dashboard')}}">Home</a></li> 
-      @endif
-      <li class="breadcrumb-item active">@yield('title')</li>
-    </ol>
-</div>
-<div class="float-right mb-2">
-<a class="btn btn-success" onClick="add()" href="javascript:void(0)"> Create Ticket</a>
-</div>
-</div>
-</div>
-@if ($message = Session::get('success'))
-<div class="alert alert-success">
-<p>{{ $message }}</p>
-</div>
-@endif
-<div class="card-body">
-<table class="table table-bordered" id="ticket-datatable">
-<thead>
-<tr>
-<th>Id</th>
-<th>Subject</th>
-<th>Status</th>
-<th>Action</th>
-</tr>
-</thead>
-</table>
-</div>
-</div>
-<!-- boostrap ticket model -->
-<div class="modal fade" id="ticket-modal" aria-hidden="true">
-<div class="modal-dialog modal-lg">
-<div class="modal-content">
-<div class="modal-header">
-<h4 class="modal-title" id="TicketModal"></h4>
-</div>
-<div class="modal-body">
-<form action="javascript:void(0)" id="TicketForm" name="TicketForm" class="form-horizontal" method="POST" enctype="multipart/form-data">
-<input type="hidden" name="id" id="id">
-<div class="form-group">
-<label for="subject" class="col-sm-6 control-label"> Subject</label>
-<div class="col-sm-12">
-<input type="text" class="form-control" id="subject" name="subject" placeholder="Enter Subject" maxlength="2250" required="">
-</div>
-</div> 
-<div class="form-group">
-<label for="department_id" class="col-sm-2 control-label">Department</label>
-<div class="col-sm-12">
-    <select department="department_id" id="department_id" name="department_id" class="form-control" maxlength="50" required="">
-    <option value="0">Select department</option>
-    @foreach ($departments as $department)
-    <option value="{{$department->id}}">{{$department->name}} </option>            
-    @endforeach
-    </select>
-</div>
-</div>
-<div class="form-group">
-<label for="body" class="col-sm-6 control-label"> Body</label>
-<div class="col-sm-12">
-<input type="text" class="form-control" id="body" name="body" placeholder="Enter Body" maxlength="2250" required="">
-</div>
-</div> 
-<div class="col-sm-offset-2 col-sm-10">
-<button type="submit" class="btn btn-primary" id="btn-save">Save changes
-</button>
-</div>
-</form>
-</div>
-<div class="modal-footer">
-</div>
-</div>
-</div>
-</div>
-<!-- end bootstrap model -->
+  <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">@yield('title')</h3>
 
-  <!-- Modal -->
+                <div class="card-tools">
+                  <div class="input-group input-group-sm" style="width: 150px;">
+                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
 
-  <div class="modal fade" id="ticketShowModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-  
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Show Ticket</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-  
-        </div>
-  
-        <div class="modal-body">
-          <p><strong>Ticket ID:</strong> <span id="ticket-id"></span></p>
-          <p><strong>Subject:</strong> <span id="ticket-subject"></span></p>
-          <p><strong>Department:</strong> <span id="ticket-department"></span></p>
-          <p><strong>Status:</strong> <span id="ticket-status"></span></p>
-          <p><strong>Body:</strong> <span id="ticket-body"></span></p>
-        </div>
-  
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
+                    <div class="input-group-append">
+                      <button type="submit" class="btn btn-default">
+                        <i class="fas fa-search"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Subject</th>
+                      <th>Body</th>
+                      <th>Status</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    @foreach ($tickets as $ticket)
+                    <tr>
+                      <td>{{$ticket->id}}</td>
+                      <td>{{$ticket->subject}}</td>
+                      <td>{{$ticket->body}}</td>
+                      @if ($ticket->status == 0)
+                      <td><span class="badge badge-danger">Pending</span></td>                        
+                      @else
+                      <td><span class="badge badge-warning">Closed</span></td>
+                      @endif
+                      <td>
+                         <!-- <a 
+                        href="javascript:void(0)" 
+                        id="show-file" 
+                        data-url="{{ route('tickets.show', $ticket->id) }}">
+                         <i class="fa fa-eye blue"></i></a> -->
+                         <a href="javascript:void(0)" data-toggle="tooltip"  id="show-file" data-url="{{ route('tickets.show', $ticket->id) }}"
+                        data-original-title="Edit" class="edit btn btn-primary edit">
+                        View
+                        </a>
+                      </td>
+                    </tr>
+                    @endforeach
+                  </tbody>
+                </table>
 
-<script type="text/javascript">
-$(document).ready( function () {
-$.ajaxSetup({
-headers: {
-'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-}
-});
-$('#ticket-datatable').DataTable({
-processing: true,
-serverSide: true,
-ajax: "{{ url('myticket-datatable') }}",
-columns: [
-{ data: 'id', name: 'id' },
-{ data: 'subject', name: 'subject' },
-{ data: 'status', name: 'status' },
-{data: 'action', name: 'action', orderable: false},
-],
-order: [[0, 'desc']]
-});
-});
-function add(){
-$('#TicketsForm').trigger("reset");
-$('#TickettModal').html("Add Ticket");
-$('#ticket-modal').modal('show');
-$('#id').val('');
-}   
-function editFunc(id){
-$.ajax({
-type:"POST",
-url: "{{ url('edit-ticket') }}",
-data: { id: id },
-dataType: 'json',
-success: function(res){
-$('#TicketModal').html("Edit Ticket");
-$('#ticket-modal').modal('show');
-$('#id').val(res.id);
-$('#subject').val(res.subject);
-$('#department_id').val(res.department_id);
-$('#body').val(res.body);
-}
-});
-}  
-function viewFunc(id){
-$.ajax({
-type:"GET",
-url: "{{ url('show-ticket') }}",
-data: { id: id },
-dataType: 'json',
-success: function(res){
-$('#ticketShowModal').modal("show");
-$('#ticket-id').text(data.id)
-$('#ticket-subject').text(data.subject);
-$('#ticket-department_id').text(data.department);
-$('#ticket-body').text(data.body);
-}
-});
-} 
-function deleteFunc(id){
-if (confirm("Delete Record?") == true) {
-var id = id;
-// ajax
-$.ajax({
-type:"POST",
-url: "{{ url('delete-ticket') }}",
-data: { id: id },
-dataType: 'json',
-success: function(res){
-var oTable = $('#ticket-datatable').dataTable();
-oTable.fnDraw(false);
-}
-});
-}
-}
-$('#TicketForm').submit(function(e) {
-e.preventDefault();
-var formData = new FormData(this);
-$.ajax({
-type:'POST',
-url: "{{ url('store-ticket')}}",
-data: formData,
-cache:false,
-contentType: false,
-processData: false,
-success: (data) => {
-$("#ticket-modal").modal('hide');
-var oTable = $('#ticket-datatable').dataTable();
-oTable.fnDraw(false);
-$("#btn-save").html('Submit');
-$("#btn-save"). attr("disabled", false);
-$("#ticket-modal").modal('reset');
-},
-error: function(data){
-console.log(data);
-}
-});
-});
-</script>
+                {!! $tickets->links() !!}
+
+              </div>
+
+              <!-- Modal -->
+ 
+              <div class="modal fade" id="fileShowModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                  <div class="modal-content">
+              
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Show Ticket</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              
+                    </div>
+              
+                    <div class="modal-body">
+                      <p><strong>Ticket no:</strong> <span id="ticket-id"></span></p>
+                      <p><strong>Subject:</strong> <span id="ticket-subject"></span></p>
+                      <p><strong>Body:</strong> <span id="ticket-body"></span></p>
+                      <p><strong>Response:</strong> <span id="ticket-response"></span></p>
+                    </div>
+              
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+        </div>
+
+
+        <script type="text/javascript">
+     
+          $(document).ready(function () {
+          
+              /*------------------------------------------
+              --------------------------------------------
+              When click file on Show Button
+              --------------------------------------------
+              --------------------------------------------*/
+              $('body').on('click', '#show-file', function () {
+      
+                var fileURL = $(this).data('url');
+      
+                  $.ajax({
+                      url: fileURL,
+                      type: 'GET',
+                      dataType: 'json',
+                      success: function(data) {
+                          $('#fileShowModal').modal('show');
+                          $('#ticket-id').text(data.id);
+                          $('#ticket-subject').text(data.subject);
+                          $('#ticket-body').text(data.body);
+                          $('#ticket-response').text(data.response);
+                      }
+                  });
+      
+            });
+              
+          });
+        
+        </script>
+</div>
 @endsection

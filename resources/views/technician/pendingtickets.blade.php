@@ -29,7 +29,7 @@
 </div>
 @endif
 <div class="card-body">
-<table class="table table-bordered" id="pendingticket-datatable">
+<table class="table table-bordered" id="technicianpendingticket-datatable">
 <thead>
 <tr>
 <th>Id</th>
@@ -98,10 +98,10 @@ headers: {
 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 }
 });
-$('#pendingticket-datatable').DataTable({
+$('#technicianpendingticket-datatable').DataTable({
 processing: true,
 serverSide: true,
-ajax: "{{ url('pendingticket-datatable') }}",
+ajax: "{{ url('technicianpendingticket-datatable') }}",
 columns: [
 { data: 'id', name: 'id' },
 { data: 'ticket', name: 'ticket.subject' },
@@ -123,7 +123,7 @@ contentType: false,
 processData: false,
 success: (data) => {
 $("#pendingticket-modal").modal('hide');
-var oTable = $('#pendingticket-datatable').dataTable();
+var oTable = $('#technicianpendingticket-datatable').dataTable();
 oTable.fnDraw(false);
 $("#btn-save").html('Submit');
 $("#btn-save"). attr("disabled", false);

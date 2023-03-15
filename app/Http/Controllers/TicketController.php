@@ -43,7 +43,7 @@ class TicketController extends Controller
   
         if(request()->ajax()) {
             $user = Auth::user();
-            return datatables()->of(Ticket::select('*')->where('user_id','=', $user->id)->get())
+            return datatables()->of(Ticket::select('*')->where('user_id','=', $user->id)->orderByDesc('created_at')->get())
             ->addColumn('action', 'tickets.ticket-action')
             ->addColumn('action', function($row){
                 if($row->status == 0) {
@@ -69,7 +69,9 @@ class TicketController extends Controller
             ->make(true);
         }
         $departments = Department::all();
-        return view('tickets.mytickets')->with('departments',$departments);
+        $user = Auth::user();
+        $tickets = Ticket::select('*')->where('user_id','=', $user->id)->orderByDesc('created_at')->paginate(10);
+        return view('tickets.mytickets',compact('tickets'))->with('departments',$departments);
     }  
       
     /**
@@ -104,7 +106,7 @@ class TicketController extends Controller
 
                     fwrite($logfile,"\n$time\t$firstname\t$lastname created\tticket $subject");
                     fclose($logfile);
-                         
+                       
         return Response()->json($ticket);
  
     }

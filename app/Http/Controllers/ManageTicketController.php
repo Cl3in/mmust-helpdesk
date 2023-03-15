@@ -204,6 +204,9 @@ class ManageTicketController extends Controller
             $user = Auth::user();
             return datatables()->of(ManageTicket::select('*')->where('technician_id','=', $user->id)
             ->where('status', '=', 1)->get())
+            ->addColumn('subject', function($row){
+                return $row->ticket->name;
+            })
             ->addColumn('action', 'technician.closedticket-action')
             ->addColumn('status', function($row){
                 if($row->status == 0) {

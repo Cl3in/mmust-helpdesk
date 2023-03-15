@@ -29,7 +29,7 @@
 </div>
 @endif
 <div class="card-body">
-<table class="table table-bordered" id="closedticket-datatable">
+<table class="table table-bordered" id="technicianclosedticket-datatable">
 <thead>
 <tr>
 <th>Id</th>
@@ -93,13 +93,13 @@ headers: {
 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 }
 });
-$('#closedticket-datatable').DataTable({
+$('#technicianclosedticket-datatable').DataTable({
 processing: true,
 serverSide: true,
-ajax: "{{ url('closedticket-datatable') }}",
+ajax: "{{ url('technicianclosedticket-datatable') }}",
 columns: [
 { data: 'id', name: 'id' },
-{ data: 'subject', name: 'subject' },
+{ data: 'subject', name: 'subject.name' },
 { data: 'status', name: 'status' },
 {data: 'action', name: 'action', orderable: false},
 ],
@@ -118,7 +118,7 @@ contentType: false,
 processData: false,
 success: (data) => {
 $("#closedticket-modal").modal('hide');
-var oTable = $('#closedticket-datatable').dataTable();
+var oTable = $('#technicianclosedticket-datatable').dataTable();
 oTable.fnDraw(false);
 $("#btn-save").html('Submit');
 $("#btn-save"). attr("disabled", false);

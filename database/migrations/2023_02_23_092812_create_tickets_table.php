@@ -30,6 +30,7 @@ return new class extends Migration
             ->onDelete('no action');
             $table->integer('status')->nullable();
             $table->longText('body');
+            $table->longText('response')->nullable();
             $table->timestamps();
         });
     }

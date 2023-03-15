@@ -114,7 +114,10 @@ class AssignedTicketController extends Controller
         $ticket = ManageTicket::findOrFail($id);
         
         if($ticket){
-            $ticket->update(array('status' => 1));
+            $ticket->update(array([
+                'status' => 1,
+                'response' => $request->response
+            ]));
             $ticket->save();
         }
         $respondticket = RespondTicket::create([
