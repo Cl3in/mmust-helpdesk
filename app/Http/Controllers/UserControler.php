@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Ticket;
 use Illuminate\Support\Facades\Hash;
 
 class UserControler extends Controller
@@ -17,7 +18,8 @@ class UserControler extends Controller
             ->addIndexColumn()
             ->make(true);
         }
-        return view('users.users');
+        $unassignedtickets = Ticket::where('status', 0)->count();
+        return view('users.users',compact('unassignedtickets'));
     }
 
     public function store(Request $request)

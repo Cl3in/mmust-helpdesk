@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\ManageTicket;
+use App\Models\RespondTicket;
 use App\Models\Ticket;
 use App\Models\User;
-use Illuminate\Support\Facades\Auth;
 
 class AssignedTicketController extends Controller
 {
@@ -16,6 +17,15 @@ class AssignedTicketController extends Controller
             $user = Auth::user();
             return datatables()->of(ManageTicket::select('*')->where('technician_id', $user->id))
             ->addColumn('action', 'assignedticket.assignedticket-action')
+            ->addColumn('action', function($row){
+                if($row->status == 0) {
+                    return '<a href="javascript:void(0)" data-toggle="tooltip" onClick="editFunc({{ $id }})" data-original-title="Edit" class="edit btn btn-info edit">
+                    View
+                    </a>'; 
+                }
+                else return '';
+            })
+
             ->addColumn('ticket', function($row){
                 return $row->ticket->subject;
             })
@@ -32,8 +42,11 @@ class AssignedTicketController extends Controller
         $tickets = Ticket::all();
         $technicians = User::where('role','technician')->get();
         $unassignedtickets = Ticket::where('status', 0)->count();
+        $user = Auth::user();
+        $technicianpendingtickets = ManageTicket::where('technician_id', $user->id)->where('status', 0)->count();
 
-        return view('assignedticket.assignedticket',compact('tickets','technicians', 'unassignedtickets'));
+        return view('assignedticket.assignedticket',compact('tickets','technicians',
+         'unassignedtickets','technicianpendingtickets'));
     }
 
     public function allAssigned()
@@ -42,6 +55,17 @@ class AssignedTicketController extends Controller
             $user = Auth::user();
             return datatables()->of(ManageTicket::select('*'))
             ->addColumn('action', 'assignedticket.allassignedticket-action')
+            ->addColumn('action', function($row){
+                if($row->status == 0) {
+                    return '<a href="javascript:void(0)" data-toggle="tooltip" onClick="editFunc({{ $id }})" data-original-title="Edit" class="edit btn btn-info edit">
+                    Edit
+                    </a>
+                    <a href="javascript:void(0);" id="delete-assignedticket" onClick="deleteFunc({{ $id }})" data-toggle="tooltip" data-original-title="Delete" class="delete btn btn-danger">
+                    Delete
+                    </a>'; 
+                }
+                else return '';
+            })
             ->addColumn('ticket', function($row){
                 return $row->ticket->subject;
             })
@@ -62,8 +86,10 @@ class AssignedTicketController extends Controller
         }
         $tickets = Ticket::all();
         $technicians = User::where('role','technician')->get();
+        $unassignedtickets = Ticket::where('status', 0)->count();
 
-        return view('assignedticket.allassignedtickets',compact('tickets','technicians')); 
+        return view('assignedticket.allassignedtickets',compact('tickets',
+        'technicians','unassignedtickets')); 
     }
 
     public function edit(Request $request)
@@ -77,6 +103,27 @@ class AssignedTicketController extends Controller
         ]
         ));
       
+        return Response()->json($manageticket);
+    }
+
+    public function store(Request $request)
+    {
+        $manageticket  = $request->id;
+
+        $id = $request->id;
+        $ticket = ManageTicket::findOrFail($id);
+        
+        if($ticket){
+            $ticket->update(array('status' => 1));
+            $ticket->save();
+        }
+        $respondticket = RespondTicket::create([
+            'technician_id' => Auth::user()->id,
+            'response' => $request->response,
+            'ticket_id' => $request->id
+        ]);
+        $respondticket->save();
+
         return Response()->json($manageticket);
     }
 }

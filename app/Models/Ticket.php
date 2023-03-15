@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Department;
+use App\Models\RespondTicket;
 
 class Ticket extends Model
 {
@@ -21,5 +22,10 @@ class Ticket extends Model
     public function department()
     {
         return $this->belongsTo(Department::class);
+    }
+
+    public function response()
+    {
+        return $this->hasMany(RespondTicket::class);
     }
 }

@@ -17,8 +17,8 @@ return new class extends Migration
             $table->increments('id');
             $table->integer('ticket_id')->unsigned();
             $table->foreign('ticket_id')
-            ->references('ticket_id')
-            ->on('manage_tickets')
+            ->references('id')
+            ->on('tickets')
             ->onUpdate('cascade')
             ->onDelete('no action');
             $table->integer('technician_id')->unsigned();

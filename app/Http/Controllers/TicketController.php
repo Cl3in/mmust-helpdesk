@@ -16,7 +16,7 @@ class TicketController extends Controller
     {
         if(request()->ajax()) {
             return datatables()->of(Ticket::select('*'))
-            ->addColumn('action', 'tickets.ticket-action')
+            ->addColumn('action', 'tickets.ticket-action')          
             ->addColumn('department', function($row){
                 return $row->department->name;
             })
@@ -33,7 +33,9 @@ class TicketController extends Controller
         $departments = Department::all();
         $technicians = User::where('role', 'technician')->get();
         $tickets = Ticket::all();
-        return view('tickets.tickets', compact('departments', 'technicians','tickets'));
+        $unassignedtickets = Ticket::where('status', 0)->count();
+        return view('tickets.tickets', compact('departments', 'technicians',
+        'tickets','unassignedtickets'));
     }
 
     public function myTicket()
@@ -43,6 +45,19 @@ class TicketController extends Controller
             $user = Auth::user();
             return datatables()->of(Ticket::select('*')->where('user_id','=', $user->id)->get())
             ->addColumn('action', 'tickets.ticket-action')
+            ->addColumn('action', function($row){
+                if($row->status == 0) {
+                    return '<a href="javascript:void(0)" data-toggle="tooltip" onClick="editFunc({{ $id }})" data-original-title="Edit" class="edit btn btn-info edit">
+                    Edit
+                    </a>
+                    <a href="javascript:void(0);" id="delete-assignedticket" onClick="deleteFunc({{ $id }})" data-toggle="tooltip" data-original-title="Delete" class="delete btn btn-danger">
+                    Delete
+                    </a>'; 
+                }
+                else return '<a href="javascript:void(0);" data-toggle="tooltip" onClick="viewFunc({{ $id }})" data-original-title="Edit" class="edit btn btn-info edit">
+                View Response
+                </a>';
+            })  
             ->addColumn('status', function($row){
                 if($row->status == 0) {
                     return 'Pending';
@@ -146,7 +161,7 @@ class TicketController extends Controller
   
         if(request()->ajax()) {
             $user = Auth::user();
-            return datatables()->of(Ticket::select('*')->where('student_id','=', $user->id)
+            return datatables()->of(Ticket::select('*')->where('user_id','=', $user->id)
             ->where('status', '=', 0)->get())
             ->addColumn('action', 'tickets.mypendingticket-action')
             ->addColumn('status', function($row){
@@ -168,7 +183,7 @@ class TicketController extends Controller
   
         if(request()->ajax()) {
             $user = Auth::user();
-            return datatables()->of(Ticket::select('*')->where('student_id','=', $user->id)
+            return datatables()->of(Ticket::select('*')->where('user_id','=', $user->id)
             ->where('status', '=', 1)->get())
             ->addColumn('action', 'tickets.myclosedticket-action')
             ->addColumn('status', function($row){
@@ -184,5 +199,11 @@ class TicketController extends Controller
         $departments = Department::all();
         return view('tickets.myclosedtickets')->with('departments',$departments);
     }
-    
+
+    public function show($id)
+    {
+        $ticket = Ticket::find($id);
+  
+        return response()->json($ticket);
+    }    
 }

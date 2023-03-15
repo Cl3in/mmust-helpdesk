@@ -40,3 +40,21 @@ Cookie: XSRF-TOKEN=otyH74qbYUoGOLicUAP3gPlUrOZQqMBzQYH1ODd1; mmust_help_desk_ses
 2023-03-09 11:32:13	Camilla	Makira	logged	in
 2023-03-09 11:33:19	CALVINS	OCHIENG 	logged	in
 2023-03-09 12:17:11	Camilla	Makira	logged	in
+2023-03-09 14:35:12	Charles	Okumbo	logged	in
+2023-03-09 17:36:00	Charles	Okumbo created	ticket MISSING MARK
+2023-03-09 17:39:00	Charles	Okumbo updated	ticket 
+2023-03-15 11:55:56	CALVINS	OCHIENG 	logged	in
+2023-03-15 12:09:22	Camilla	Makira	logged	in
+2023-03-15 12:14:37	John	Paul	logged	in
+2023-03-15 12:15:59	Charles	Okumbo	logged	in
+2023-03-15 12:22:32	John	Paul	logged	in
+2023-03-15 12:22:49	John	Paul created	ticket MISSING MARK
+2023-03-15 12:23:09	CALVINS	OCHIENG 	logged	in
+2023-03-15 12:26:10	CALVINS	OCHIENG  updated	ticket 
+2023-03-15 12:26:42	Camilla	Makira	logged	in
+2023-03-15 12:45:34	John	Paul	logged	in
+2023-03-15 12:48:05	Camilla	Makira	logged	in
+2023-03-15 13:27:38	CALVINS	OCHIENG 	logged	in
+2023-03-15 13:33:29	CALVINS	OCHIENG 	logged	in
+2023-03-15 13:37:05	Camilla	Makira	logged	in
+2023-03-15 13:43:14	John	Paul	logged	in

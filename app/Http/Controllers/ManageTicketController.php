@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\ManageTicket;
 use App\Models\Ticket;
 use App\Models\User;
@@ -15,6 +16,17 @@ class ManageTicketController extends Controller
         if(request()->ajax()) {
             return datatables()->of(ManageTicket::select('*'))
             ->addColumn('action', 'manageticket.manageticket-action')
+            ->addColumn('action', function($row){
+                if($row->status == 0) {
+                    return '<a href="javascript:void(0)" data-toggle="tooltip" onClick="editFunc({{ $id }})" data-original-title="Edit" class="edit btn btn-info edit">
+                    Edit
+                    </a>
+                    <a href="javascript:void(0);" id="delete-manageticket" onClick="deleteFunc({{ $id }})" data-toggle="tooltip" data-original-title="Delete" class="delete btn btn-danger">
+                    Delete
+                    </a>';
+                }
+                else return '';
+            })
             ->addColumn('ticket', function($row){
                 return $row->ticket->subject;
             })
@@ -35,8 +47,12 @@ class ManageTicketController extends Controller
         }
         $tickets = Ticket::where('status', 0)->get();
         $technicians = User::where('role','technician')->get();
+        $unassignedtickets = Ticket::where('status', 0)->count();
+        $user = Auth::user();
+        $technicianpendingtickets = ManageTicket::where('technician_id', $user->id)->where('status', 0)->count();
 
-        return view('manageticket.manageticket',compact('tickets','technicians'));
+        return view('manageticket.manageticket',compact('tickets','technicians',
+        'technicianpendingtickets','unassignedtickets'));
     }
       
       
@@ -121,7 +137,9 @@ class ManageTicketController extends Controller
             ->make(true);
         }
         $departments = Department::all();
-        return view('admin.pendingtickets')->with('departments',$departments);
+        $unassignedtickets = Ticket::where('status', 0)->count();
+
+        return view('admin.pendingtickets',compact('unassignedtickets'))->with('departments',$departments);
     }
 
     public function adminClosedTicket()
@@ -143,7 +161,9 @@ class ManageTicketController extends Controller
             ->make(true);
         }
         $departments = Department::all();
-        return view('admin.closedtickets')->with('departments',$departments);
+        $unassignedtickets = Ticket::where('status', 0)->count();
+
+        return view('admin.closedtickets',compact('unassignedtickets'))->with('departments',$departments);
     }
 
     public function technicianPendingTicket()
@@ -169,8 +189,11 @@ class ManageTicketController extends Controller
         }
         $departments = Department::all();
         $tickets = Ticket::all();
+        $user = Auth::user();
+        $technicianpendingtickets = ManageTicket::where('technician_id', $user->id)->where('status', 0)->count();
+
         return view('technician.pendingtickets', compact(
-            'departments', 'tickets'
+            'departments', 'tickets','technicianpendingtickets'
         ));
     }
 
@@ -193,7 +216,10 @@ class ManageTicketController extends Controller
             ->make(true);
         }
         $departments = Department::all();
-        return view('technician.closedtickets')->with('departments',$departments);
+        $user = Auth::user();
+        $technicianpendingtickets = ManageTicket::where('technician_id', $user->id)->where('status', 0)->count();
+
+        return view('technician.closedtickets',compact('technicianpendingtickets'))->with('departments',$departments);
     }
 
 }

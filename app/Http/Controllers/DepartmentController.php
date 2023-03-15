@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use  App\Models\Department;
+use  App\Models\Ticket;
 
 class DepartmentController extends Controller
 {
@@ -16,7 +17,8 @@ class DepartmentController extends Controller
             ->addIndexColumn()
             ->make(true);
         }
-        return view('departments.departments');
+        $unassignedtickets = Ticket::where('status', 0)->count();
+        return view('departments.departments',compact('unassignedtickets'));
     }
       
       

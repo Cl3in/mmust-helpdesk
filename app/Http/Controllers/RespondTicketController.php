@@ -36,8 +36,10 @@ class RespondTicketController extends Controller
         }
         $id = Auth::user()->id;
         $tickets = ManageTicket::where('status', 0)->where('technician_id', $id)->get();
+        $user = Auth::user();
+        $technicianpendingtickets = ManageTicket::where('technician_id', $user->id)->where('status', 0)->count();
 
-        return view('respondticket.respondtickets',compact('tickets'));
+        return view('respondticket.respondtickets',compact('tickets','technicianpendingtickets'));
     }
 
     public function store(Request $request)

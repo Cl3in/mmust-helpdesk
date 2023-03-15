@@ -15,6 +15,7 @@ class ManageTicket extends Model
          'technician_id',
          'remarks',
          'response',
+         'status'
 
                ];
 

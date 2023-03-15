@@ -86,6 +86,34 @@
 </div>
 </div>
 <!-- end bootstrap model -->
+
+  <!-- Modal -->
+
+  <div class="modal fade" id="ticketShowModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+  
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Show Ticket</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  
+        </div>
+  
+        <div class="modal-body">
+          <p><strong>Ticket ID:</strong> <span id="ticket-id"></span></p>
+          <p><strong>Subject:</strong> <span id="ticket-subject"></span></p>
+          <p><strong>Department:</strong> <span id="ticket-department"></span></p>
+          <p><strong>Status:</strong> <span id="ticket-status"></span></p>
+          <p><strong>Body:</strong> <span id="ticket-body"></span></p>
+        </div>
+  
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 <script type="text/javascript">
 $(document).ready( function () {
 $.ajaxSetup({
@@ -125,10 +153,24 @@ $('#id').val(res.id);
 $('#subject').val(res.subject);
 $('#department_id').val(res.department_id);
 $('#body').val(res.body);
-
 }
 });
 }  
+function viewFunc(id){
+$.ajax({
+type:"GET",
+url: "{{ url('show-ticket') }}",
+data: { id: id },
+dataType: 'json',
+success: function(res){
+$('#ticketShowModal').modal("show");
+$('#ticket-id').text(data.id)
+$('#ticket-subject').text(data.subject);
+$('#ticket-department_id').text(data.department);
+$('#ticket-body').text(data.body);
+}
+});
+} 
 function deleteFunc(id){
 if (confirm("Delete Record?") == true) {
 var id = id;

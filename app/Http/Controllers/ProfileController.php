@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Ticket;
+use App\Models\ManageTicket;
 use Illuminate\Support\Facades\Auth;
 
 class ProfileController extends Controller
@@ -11,7 +13,11 @@ class ProfileController extends Controller
     public function getProfile()
     {
         $user = Auth::user();
-        return view('profile.profile', compact('user'));
+        $unassignedtickets = Ticket::where('status', 0)->count();
+        $user = Auth::user();
+        $technicianpendingtickets = ManageTicket::where('technician_id', $user->id)->where('status', 0)->count();
+
+        return view('profile.profile', compact('user','unassignedtickets','technicianpendingtickets'));
     }
 
     public function postProfileUpdate(Request $request)
